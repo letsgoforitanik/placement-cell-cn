@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "target": "es6",
+        "moduleResolution": "node",
+        "strict": true,
+        "baseUrl": "src",
+        "outDir": "dist",
+        "paths": {
+            "@/*" : ["*"]
+        }
+    },
+    "ts-node": {
+        "require": ["tsconfig-paths/register"],
+        "files": true
+    },
+    "exclude": ["src/assets/**/*.ts"]
+
+}
