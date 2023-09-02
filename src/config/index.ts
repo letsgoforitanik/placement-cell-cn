@@ -1,3 +1,4 @@
 import environment from "./environment";
+import initializeDb from "./database-config";
 
-export { environment };
+export { environment, initializeDb };
