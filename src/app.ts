@@ -1,10 +1,14 @@
 import http from "http";
 import express, { Express } from "express";
 import ejsLayouts from "express-ejs-layouts";
+import bodyParser from "body-parser";
+import session from "express-session";
+import flash from "connect-flash";
 
 import controllersRouter from "@/controllers";
-import { environment, initializeDb } from "@/config";
-import { getPath } from "@/helpers";
+import { environment, initializeDb, sessionConfig } from "@/config";
+import { getPath, extendExpress } from "@/helpers";
+import { locals } from "@/middlewares";
 
 
 function configureAppSettings(app: Express) {
@@ -18,14 +22,20 @@ function configureAppSettings(app: Express) {
 
 function configureApp(app: Express) {
     app.use(ejsLayouts);
-    app.use(controllersRouter);
     app.use(express.static('dist/public'));
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(session(sessionConfig));
+    app.use(flash());
+    app.use(locals);
+    app.use(controllersRouter);
 }
 
 
 async function main() {
 
     console.log(`Environment : ${environment.nodeEnv}`);
+
+    extendExpress();
 
     const app = express();
 
