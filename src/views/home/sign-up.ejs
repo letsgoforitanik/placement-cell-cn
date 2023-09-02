@@ -1,0 +1,37 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/css/auth.css">
+
+<%- contentFor('body') %>
+<div class="auth-container">
+    <h1 class="display-4 text-center"><strong>Sign Up</strong></h1>
+
+    <form method="post" action="/sign-up">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+            <div class="form-text"></div>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="form-text"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <div class="form-text"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="retyped-password" class="form-label">Confirm password</label>
+            <input type="password" class="form-control" id="retyped-password" name="retypedPassword" required>
+            <div class="form-text"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

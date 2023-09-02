@@ -1,0 +1,22 @@
+<%- contentFor('style') %>
+<link rel="stylesheet" href="/css/auth.css">
+
+<%- contentFor('body') %>
+<div class="auth-container">
+    <h1 class="display-4 text-center"><strong>Sign In</strong></h1>
+
+    <form>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            <div id="emailHelp" class="form-text"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
