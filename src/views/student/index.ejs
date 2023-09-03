@@ -1,0 +1,46 @@
+<%- contentFor('body') %>
+<div class="list-container">
+
+    <h1 class="display-6">
+        <strong>Students</strong>
+        <a href="/students/add" class="btn btn-success">Add Student</a>
+    </h1>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Email address</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">College name</th>
+                <th scope="col">Placement Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i=0; i < students.length; i++) { %>
+                <tr>
+                    <% const { _id, name, email, college, phone, status } = students[i]; %>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= name %></td>
+                    <td><%= email %></td>
+                    <td><%= phone %></td>
+                    <td><%= college %></td>
+                    <td>
+                        <span class="badge text-bg-<%= status === 'placed' ? 'success' : 'warning' %>">
+                            <%= status.toUpperCase() %>
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/students/<%= _id.toString() %>/edit">Edit</a> | 
+                        <a href="/students/delete/<%= _id.toString() %>">Remove</a>
+                    </td>
+                </tr> 
+            <% } %>
+        </tbody>
+    </table>
+
+
+</div>

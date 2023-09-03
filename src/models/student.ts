@@ -24,7 +24,7 @@ const studentSchema = new Schema<IStudent>(
         status: {
             type: Schema.Types.String,
             required: true,
-            enum: ['passed', 'failed']
+            enum: ['placed', 'not placed']
         }
     },
     {

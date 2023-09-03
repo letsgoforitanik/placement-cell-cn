@@ -1,35 +1,34 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { SignUpInfo } from "@/types/validation-result";
-import { validate } from "@/middlewares";
+import { anonymousOnly, authorizedOnly, validate } from "@/middlewares";
 import { employeeService } from "@/services";
+import { passport } from "@/config";
 
 const router = express.Router();
 
 // routes
 
-router.get('/', (req, res) => res.redirect('/sign-in'));
-router.get('/sign-in', getSigninPage);
-router.get('/sign-up', getSignupPage);
-router.post('/sign-up', validate, signupUser);
+router.get('/', (req, res) => res.redirect('/students'));
+router.get('/sign-in', anonymousOnly, getSignInPage);
+router.post('/sign-in', anonymousOnly, signInUser);
+router.get('/sign-up', anonymousOnly, getSignUpPage);
+router.post('/sign-up', anonymousOnly, validate, signUpUser);
+router.get('/sign-out', authorizedOnly, signOutUser);
 
 
 // route handlers
 
-function getIndexPage(req: Request, res: Response) {
-    return res.render('home/index');
-}
 
-function getSigninPage(req: Request, res: Response) {
+function getSignInPage(req: Request, res: Response) {
     return res.render('home/sign-in');
 }
 
 
-function getSignupPage(req: Request, res: Response) {
+function getSignUpPage(req: Request, res: Response) {
     return res.render('home/sign-up');
 }
 
-
-async function signupUser(req: Request, res: Response) {
+async function signUpUser(req: Request, res: Response) {
 
     const info = req.validationResult as SignUpInfo;
 
@@ -44,5 +43,40 @@ async function signupUser(req: Request, res: Response) {
     return res.redirect('/sign-in');
 
 }
+
+async function signInUser(req: Request, res: Response, next: NextFunction) {
+
+    function authCallback(errors: AppError[], user: any) {
+
+        if (!user) {
+            req.setFlashErrors(errors);
+            return res.redirect('back');
+        }
+
+        function loginCallback(error: any) {
+            if (error) return next(error);
+            req.setFlashMessage('Signed in successfully');
+            return res.redirect('/students');
+        }
+
+        req.login(user, loginCallback);
+
+    }
+
+    const handler = passport.authenticate('local', authCallback);
+
+    handler(req, res, next);
+
+}
+
+
+function signOutUser(req: Request, res: Response) {
+    return req.logout(() => {
+        req.setFlashMessage('Signed out successfully');
+        return res.redirect('/sign-in');
+    });
+}
+
+
 
 export { router }

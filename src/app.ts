@@ -6,7 +6,7 @@ import session from "express-session";
 import flash from "connect-flash";
 
 import controllersRouter from "@/controllers";
-import { environment, initializeDb, sessionConfig } from "@/config";
+import { environment, initializeDb, sessionConfig, passport } from "@/config";
 import { getPath, extendExpress } from "@/helpers";
 import { locals } from "@/middlewares";
 
@@ -26,6 +26,8 @@ function configureApp(app: Express) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(session(sessionConfig));
     app.use(flash());
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use(locals);
     app.use(controllersRouter);
 }

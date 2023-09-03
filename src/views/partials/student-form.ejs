@@ -1,0 +1,84 @@
+<% 
+    const getErrorClass = (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
+    const url = type === 'edit' ? `/students/${student.id}/edit` : `/students/add`;
+%>
+
+
+<form action="<%= url %>" method="post">
+
+    <% if (type === 'edit') { %> <input type="hidden" name="id" value="<%= student.id %>"> <% } %>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Full name</label>
+        
+        <input 
+            type="text" 
+            class="form-control <%= getErrorClass('name') %>" 
+            id="name" 
+            name="name" 
+            required 
+            value="<%= student?.name %>"
+            >
+        
+        <% if (errors?.name) { %> <div class="form-text invalid-feedback"><%= errors.name %></div> <% } %>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        
+        <input 
+            type="email" 
+            class="form-control <%= getErrorClass('email') %>" 
+            id="email" 
+            name="email" 
+            required
+            value="<%= student?.email %>"
+            >
+
+        <% if (errors?.email) { %> <div class="form-text invalid-feedback"><%= errors.email %></div> <% } %>
+    </div>
+
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone number</label>
+        
+        <input 
+            type="tel" 
+            class="form-control <%= getErrorClass('phone') %>" 
+            id="phone" 
+            name="phone" 
+            required
+            value="<%= student?.phone %>"
+            >
+
+        <% if (errors?.phone) { %> <div class="form-text invalid-feedback"><%= errors.phone %></div> <% } %>
+    </div>
+
+    <div class="mb-3">
+        <label for="college" class="form-label">College name</label>
+        
+        <input 
+            type="text" 
+            class="form-control <%= getErrorClass('college') %>" 
+            id="college" 
+            name="college" 
+            required
+            value="<%= student?.college %>"
+            >
+
+        <% if (errors?.college) { %> <div class="form-text invalid-feedback"><%= errors.college %></div> <% } %>
+    </div>
+
+    <div class="mb-3">
+        <label for="status" class="form-label">Placement status</label>
+        
+        <select class="form-select <%= getErrorClass('status') %>" name="status" id="status">
+            <option value="not placed">Not Placed</option>
+            <option value="placed">Placed</option>
+        </select>
+
+        <% if (errors?.status) { %> <div class="form-text invalid-feedback"><%= errors.status %></div> <% } %>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

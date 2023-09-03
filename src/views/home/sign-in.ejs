@@ -1,24 +1,51 @@
-<% viewBag.pageTitle = 'Sign In' %>
+<% 
+    viewBag.pageTitle = 'Sign In';
+    const getErrorClass =  (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
+%>
 
 <%- contentFor('style') %>
 <link rel="stylesheet" href="/css/auth.css">
 
 <%- contentFor('body') %>
 <div class="auth-container">
-    <h1 class="display-4 text-center"><strong>Sign In</strong></h1>
 
-    <form>
+    <h1 class="display-4 text-center">
+        <strong>Sign In</strong>
+    </h1>
+
+    <form method="post" action="/sign-in">
+
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-            <div id="emailHelp" class="form-text"></div>
+            <label for="email" class="form-label">Email address</label>
+            
+            <input 
+                type="email" 
+                class="form-control <%= getErrorClass('email') %>" 
+                id="email" 
+                name="email" 
+                required
+                value="<%= lastRequestBody?.email %>"
+                >
+
+            <% if (errors?.email) { %> <div class="form-text invalid-feedback"><%= errors.email %></div> <% } %>
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" required>
+            <label for="password" class="form-label">Password</label>
+
+            <input 
+                type="password" 
+                class="form-control <%= getErrorClass('password') %>" 
+                id="password" 
+                name="password" 
+                required
+                value="<%= lastRequestBody?.password %>"
+                >
+
+            <% if (errors?.password) { %> <div class="form-text invalid-feedback"><%= errors.password %></div> <% } %>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+
     </form>
 </div>

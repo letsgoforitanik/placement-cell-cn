@@ -1,0 +1,15 @@
+<%
+    viewBag.pageTitle = 'Add Student';
+%>
+
+
+<%- contentFor('body') %>
+<div class="add-edit-container">
+    
+    <h1 class="display-6">
+        <strong>Add Student</strong>
+    </h1>
+
+    <%- include('../partials/student-form', { type: 'add', student: lastRequestBody }) %>
+
+</div>

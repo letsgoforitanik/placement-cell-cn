@@ -5,13 +5,14 @@ interface IStudent {
     email: string;
     phone: string;
     college: string;
-    status: 'passed' | 'failed';
+    status: 'placed' | 'not placed';
 }
 
 interface IEmployee {
     name: string;
     email: string;
     password: string;
+    validatePassword(data: string): Promise<boolean>;
 }
 
 interface ICourseScores {
