@@ -17,6 +17,7 @@ studentRouter.post('/add', validate, addStudent);
 studentRouter.get('/:id/edit', getEditStudentPage);
 studentRouter.post('/:id/edit', validate, updateStudent);
 studentRouter.get('/:id/delete', deleteStudent);
+studentRouter.get('/course-scores', getCourseScorePage);
 
 
 // route handlers
@@ -74,11 +75,17 @@ async function updateStudent(req: Request, res: Response) {
 async function deleteStudent(req: Request, res: Response) {
 
     const studentId = req.params.id;
-    const result = await studentService.deleteStudent(studentId);
+    await studentService.deleteStudent(studentId);
 
     req.setFlashMessage('Student deleted successfully');
     return res.redirect('/students');
 
+}
+
+async function getCourseScorePage(req: Request, res: Response) {
+    const result = await studentService.getStudents();
+    const students = result.data;
+    return res.render('student/course-scores', { students });
 }
 
 export { router }

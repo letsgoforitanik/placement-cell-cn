@@ -1,0 +1,48 @@
+<%
+    viewBag.pageTitle = 'Students | Course Scores';
+%>
+
+<%- contentFor('body') %>
+<div class="list-container">
+
+    <h1 class="display-6">
+        <strong>Course Scores</strong>
+    </h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Email address</th>
+                <th scope="col">DSA Final Score</th>
+                <th scope="col">Web Development Final Score</th>
+                <th scope="col">React Final Score</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i=0; i < students.length; i++) { %>
+                <tr>
+                    <% const { _id, name, email, college, phone, status } = students[i]; %>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= name %></td>
+                    <td><%= email %></td>
+                    <td><%= phone %></td>
+                    <td><%= college %></td>
+                    <td>
+                        <span class="badge text-bg-<%= status === 'placed' ? 'success' : 'warning' %>">
+                            <%= status.toUpperCase() %>
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/students/<%= _id.toString() %>/edit">Edit</a> | 
+                        <a onclick="return showDeleteAlert();" href="/students/<%= _id.toString() %>/delete">Remove</a>
+                    </td>
+                </tr> 
+            <% } %>
+        </tbody>
+    </table>
+
+
+</div>
