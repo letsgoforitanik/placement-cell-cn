@@ -1,3 +1,7 @@
+<%
+    viewBag.pageTitle = 'Students';
+%>
+
 <%- contentFor('body') %>
 <div class="list-container">
 
@@ -35,7 +39,7 @@
                     </td>
                     <td>
                         <a href="/students/<%= _id.toString() %>/edit">Edit</a> | 
-                        <a href="/students/delete/<%= _id.toString() %>">Remove</a>
+                        <a onclick="return showDeleteAlert();" href="/students/<%= _id.toString() %>/delete">Remove</a>
                     </td>
                 </tr> 
             <% } %>

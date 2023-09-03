@@ -30,3 +30,8 @@ export async function updateStudent(info: StudentUpdateDto) {
     const student = await Student.findByIdAndUpdate(info.id, info);
     return success(student);
 }
+
+export async function deleteStudent(id: string) {
+    await Student.findByIdAndDelete(id);
+    return success(null);
+}

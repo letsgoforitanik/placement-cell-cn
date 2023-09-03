@@ -1,6 +1,7 @@
 <% 
     const getErrorClass = (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
     const url = type === 'edit' ? `/students/${student.id}/edit` : `/students/add`;
+    const getSelectedStatus = (status) => status === student?.status ? 'selected' : '';
 %>
 
 
@@ -72,8 +73,8 @@
         <label for="status" class="form-label">Placement status</label>
         
         <select class="form-select <%= getErrorClass('status') %>" name="status" id="status">
-            <option value="not placed">Not Placed</option>
-            <option value="placed">Placed</option>
+            <option value="not placed" <%= getSelectedStatus("not placed") %>>Not Placed</option>
+            <option value="placed" <%= getSelectedStatus("placed") %>>Placed</option>
         </select>
 
         <% if (errors?.status) { %> <div class="form-text invalid-feedback"><%= errors.status %></div> <% } %>

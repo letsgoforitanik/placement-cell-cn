@@ -16,6 +16,7 @@ studentRouter.get('/add', getAddStudentPage);
 studentRouter.post('/add', validate, addStudent);
 studentRouter.get('/:id/edit', getEditStudentPage);
 studentRouter.post('/:id/edit', validate, updateStudent);
+studentRouter.get('/:id/delete', deleteStudent);
 
 
 // route handlers
@@ -65,6 +66,17 @@ async function updateStudent(req: Request, res: Response) {
     await studentService.updateStudent(info);
 
     req.setFlashMessage('Student updated successfully');
+    return res.redirect('/students');
+
+}
+
+
+async function deleteStudent(req: Request, res: Response) {
+
+    const studentId = req.params.id;
+    const result = await studentService.deleteStudent(studentId);
+
+    req.setFlashMessage('Student deleted successfully');
     return res.redirect('/students');
 
 }
