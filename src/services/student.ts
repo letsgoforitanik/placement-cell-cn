@@ -6,8 +6,8 @@ import { StudentCreateDto, StudentUpdateDto } from "@/types/dto";
 export async function addStudent(info: StudentCreateDto) {
     const { phone, email } = info;
 
-    const count = await Student.findOne({ phone, email }).count();
-    if (count > 0) return error('Student already exists');
+    const count = await Student.findOne({ $or: [{ phone }, { email }] }).count();
+    if (count > 0) return error('Student already exists with same phone / email');
 
     const student = await Student.create(info);
     return success(student);

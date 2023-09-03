@@ -18,7 +18,7 @@ export default function extendExpress() {
         }
 
         this.flash('errors', messages);
-
+        this.flash('last-request-body', JSON.stringify(this.body));
 
     };
 
