@@ -27,3 +27,8 @@ export async function deleteInterview(id: string) {
     await Interview.findByIdAndDelete(id);
     return success(null);
 }
+
+export async function getInterviewInDetails(id: string) {
+    const interview = await Interview.findById(id);
+    return success(interview);
+}

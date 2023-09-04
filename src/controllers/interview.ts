@@ -17,6 +17,7 @@ interviewRouter.post('/add', validate, addInterview);
 interviewRouter.get('/:id/edit', getEditInterviewPage);
 interviewRouter.post('/:id/edit', validate, updateInterviewDetails);
 interviewRouter.get('/:id/delete', deleteInterview);
+interviewRouter.get('/:id/students', getInterviewStudentListPage);
 
 
 // route handlers
@@ -81,6 +82,22 @@ async function deleteInterview(req: Request, res: Response) {
     req.setFlashMessage('Interview deleted successfully');
     return res.redirect('/interviews');
 }
+
+
+async function getInterviewStudentListPage(req: Request, res: Response) {
+    const interviewId = req.params.id;
+    const result = await interviewService.getInterviewInDetails(interviewId);
+    const interview = result.data!;
+
+    return res.render('interview/student-list', {
+        interview: {
+            id: interview.id,
+            company: interview.company,
+            date: moment(interview.date).format('dddd, DD/MM/YYYY')
+        }
+    });
+}
+
 
 
 export { router };

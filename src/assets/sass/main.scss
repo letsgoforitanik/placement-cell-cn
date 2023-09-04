@@ -32,6 +32,13 @@ div.container {
             display: flex;
             align-items: center;
             column-gap: 70px;
+
+            div.interview-details {
+                font-size: 15px;
+                font-weight: 400;
+                border-left: 1px solid black;
+                padding-left: 18px;
+            }
         }
     }
 }
