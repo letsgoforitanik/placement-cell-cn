@@ -22,3 +22,8 @@ export async function updateInterview(info: InterviewUpdateDto) {
     const interview = await Interview.findByIdAndUpdate(id, data);
     return success(interview);
 }
+
+export async function deleteInterview(id: string) {
+    await Interview.findByIdAndDelete(id);
+    return success(null);
+}

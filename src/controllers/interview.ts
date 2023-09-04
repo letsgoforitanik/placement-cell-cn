@@ -16,6 +16,7 @@ interviewRouter.get('/add', getAddInterviewPage);
 interviewRouter.post('/add', validate, addInterview);
 interviewRouter.get('/:id/edit', getEditInterviewPage);
 interviewRouter.post('/:id/edit', validate, updateInterviewDetails);
+interviewRouter.get('/:id/delete', deleteInterview);
 
 
 // route handlers
@@ -70,6 +71,14 @@ async function updateInterviewDetails(req: Request, res: Response) {
     const info = req.validationResult as InterviewEditInfo;
     await interviewService.updateInterview(info);
     req.setFlashMessage('Interview updated successfully');
+    return res.redirect('/interviews');
+}
+
+
+async function deleteInterview(req: Request, res: Response) {
+    const interviewId = req.params.id;
+    await interviewService.deleteInterview(interviewId);
+    req.setFlashMessage('Interview deleted successfully');
     return res.redirect('/interviews');
 }
 
