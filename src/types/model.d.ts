@@ -23,7 +23,7 @@ interface IEmployee {
 }
 
 interface IInterview {
-    companyName: string;
+    company: string;
     date: Date;
 }
 

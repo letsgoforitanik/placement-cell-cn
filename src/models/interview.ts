@@ -3,7 +3,7 @@ import { IInterview } from "@/types/model";
 
 const interviewSchema = new Schema<IInterview>(
     {
-        companyName: {
+        company: {
             type: Schema.Types.String,
             required: true
         },

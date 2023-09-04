@@ -1,0 +1,41 @@
+<%
+    viewBag.pageTitle = 'Interviews';
+%>
+
+<%- contentFor('body') %>
+<div class="list-container">
+
+    <h1 class="display-6">
+        <strong>Interviews</strong>
+        <a href="/interviews/add" class="btn btn-success">Create Interview</a>
+    </h1>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Interview Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i=0; i < interviews.length; i++) { %>
+                <tr>
+                    <% const { id, company, date } = interviews[i]; %>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= company %></td>
+                    <td><%= date %></td>
+                    <td>
+                        <a href="/interviews/<%= id %>/students">Students</a> |
+                        <a href="/interviews/<%= id %>/edit">Edit</a> | 
+                        <a onclick="return confirm('Do you want to delete?')" href="/interviews/<%= id %>/delete">Remove</a>
+                    </td>
+                </tr> 
+            <% } %>
+        </tbody>
+    </table>
+
+
+</div>

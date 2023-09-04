@@ -1,0 +1,60 @@
+<%
+    viewBag.pageTitle = 'Interviews | Edit Interview';
+    const getErrorClass = (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
+%>
+
+<%- contentFor('style') %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
+
+<%- contentFor('script') %>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="/js/interview.js" type="module"></script>
+
+<%- contentFor('body') %>
+<div class="add-edit-container">
+    
+    <h1 class="display-6">
+        <strong>Edit Interview</strong>
+    </h1>
+
+    <form action="/interviews/<%= interview.id %>/edit" method="post">
+    
+        <input type="hidden" name="id" value="<%= interview.id %>" />
+        
+        <div class="mb-3">
+            <label for="company" class="form-label">Company name</label>
+            
+            <input 
+                type="text" 
+                class="form-control <%= getErrorClass('company') %>" 
+                id="company" 
+                name="company" 
+                required 
+                value="<%= lastRequestBody?.company ?? interview.company %>"
+                />
+            
+            <% if (errors?.company) { %> <div class="form-text invalid-feedback"><%= errors.company %></div> <% } %>
+        </div>
+    
+        <div class="mb-3">
+            <label for="email" class="form-label">Interview Date</label>
+            
+            <input 
+                type="text" 
+                class="form-control <%= getErrorClass('date') %>" 
+                id="date" 
+                name="date" 
+                required
+                value="<%= lastRequestBody?.date ?? interview.date %>"
+                readonly
+                />
+    
+            <% if (errors?.date) { %> <div class="form-text invalid-feedback"><%= errors.date %></div> <% } %>
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    </form>
+
+</div>
