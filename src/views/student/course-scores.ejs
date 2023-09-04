@@ -1,5 +1,6 @@
 <%
     viewBag.pageTitle = 'Students | Course Scores';
+    const getScore = (rawScore) => rawScore === null ? 'N/A' : rawScore;
 %>
 
 <%- contentFor('body') %>
@@ -24,20 +25,15 @@
         <tbody>
             <% for (let i=0; i < students.length; i++) { %>
                 <tr>
-                    <% const { _id, name, email, college, phone, status } = students[i]; %>
+                    <% const { _id, name, email, college, courseScores } = students[i]; %>
                     <th scope="row"><%= i + 1 %></th>
                     <td><%= name %></td>
                     <td><%= email %></td>
-                    <td><%= phone %></td>
-                    <td><%= college %></td>
+                    <td><%= getScore(courseScores.dsa) %></td>
+                    <td><%= getScore(courseScores.webd) %></td>
+                    <td><%= getScore(courseScores.react) %></td>
                     <td>
-                        <span class="badge text-bg-<%= status === 'placed' ? 'success' : 'warning' %>">
-                            <%= status.toUpperCase() %>
-                        </span>
-                    </td>
-                    <td>
-                        <a href="/students/<%= _id.toString() %>/edit">Edit</a> | 
-                        <a onclick="return showDeleteAlert();" href="/students/<%= _id.toString() %>/delete">Remove</a>
+                        <a href="/students/course-scores/<%= _id.toString() %>/edit">Edit</a>
                     </td>
                 </tr> 
             <% } %>

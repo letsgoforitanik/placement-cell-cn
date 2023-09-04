@@ -11,7 +11,6 @@ export default function validate(req: Request, res: Response, next: NextFunction
 
     if (result.success === false) {
         const errors = result.error.errors.map(({ path, message }) => ({ path: path[0]?.toString(), message }));
-        req.flash('last-request-body', JSON.stringify(req.body));
         req.setFlashErrors(errors);
         return res.redirect('back');
     }

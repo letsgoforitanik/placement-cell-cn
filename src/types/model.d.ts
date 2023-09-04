@@ -1,11 +1,18 @@
 import { Types, HydratedDocument } from "mongoose";
 
+interface CourseScores {
+    dsa: number | null;
+    react: number | null;
+    webd: number | null;
+}
+
 interface IStudent {
     name: string;
     email: string;
     phone: string;
     college: string;
     status: 'placed' | 'not placed';
+    courseScores: CourseScores
 }
 
 interface IEmployee {
@@ -13,13 +20,6 @@ interface IEmployee {
     email: string;
     password: string;
     validatePassword(data: string): Promise<boolean>;
-}
-
-interface ICourseScores {
-    student: Types.ObjectId | HydratedDocument<IStudent>;
-    dsaFinalScore?: number;
-    reactFinalScore?: number;
-    webdFinalScore?: number;
 }
 
 interface IInterview {

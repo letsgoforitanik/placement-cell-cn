@@ -1,0 +1,75 @@
+<%
+    viewBag.pageTitle = 'Students | Edit Course Scores';
+    const getScore = (rawScore) => rawScore === null ? 'N/A' : rawScore;
+    const getErrorClass = (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
+%>
+
+<%- contentFor('body') %>
+<div class="add-edit-container">
+    
+    <h1 class="display-6">
+        <strong>Edit Course Scores</strong>
+    </h1>
+
+    <form action="/students/course-scores/<%= student.id %>/edit" method="post">
+
+        <input type="hidden" name="id" value="<%= student.id %>">
+    
+        <div class="mb-3">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" class="form-control" value="<%= student.name %>" readonly>
+        </div>
+    
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" value="<%= student.email %>" readonly>
+        </div>
+    
+        <div class="mb-3">
+            <label for="dsa" class="form-label">DSA Final Score</label>
+            
+            <input 
+                type="tel" 
+                class="form-control <%= getErrorClass('dsa') %>" 
+                id="dsa" 
+                name="dsa" 
+                value="<%= lastRequestBody?.dsa || student.courseScores.dsa %>"
+                >
+    
+            <% if (errors?.dsa) { %> <div class="form-text invalid-feedback"><%= errors.dsa %></div> <% } %>
+        </div>
+
+        <div class="mb-3">
+            <label for="webd" class="form-label">Web Development Final Score</label>
+            
+            <input 
+                type="tel" 
+                class="form-control <%= getErrorClass('webd') %>" 
+                id="webd" 
+                name="webd" 
+                value="<%= lastRequestBody?.webd || student.courseScores.webd %>"
+                >
+    
+            <% if (errors?.webd) { %> <div class="form-text invalid-feedback"><%= errors.webd %></div> <% } %>
+        </div>
+    
+        <div class="mb-3">
+            <label for="react" class="form-label">React Final Score</label>
+            
+            <input 
+                type="tel" 
+                class="form-control <%= getErrorClass('react') %>" 
+                id="react" 
+                name="react" 
+                value="<%= lastRequestBody?.react || student.courseScores.react %>"
+                >
+    
+            <% if (errors?.react) { %> <div class="form-text invalid-feedback"><%= errors.react %></div> <% } %>
+        </div>
+    
+            
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    </form>
+
+</div>

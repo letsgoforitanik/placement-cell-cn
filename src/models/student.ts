@@ -25,6 +25,14 @@ const studentSchema = new Schema<IStudent>(
             type: Schema.Types.String,
             required: true,
             enum: ['placed', 'not placed']
+        },
+        courseScores: {
+            type: {
+                dsa: Schema.Types.Number,
+                react: Schema.Types.Number,
+                webd: Schema.Types.Number
+            },
+            required: true,
         }
     },
     {
