@@ -1,5 +1,20 @@
 <%
     viewBag.pageTitle = 'Interviews | Student List';
+
+    function getInterviewStatusClass(status) {
+        
+        const map = {
+            'appearing' : 'primary',
+            'passed' : 'success',
+            'failed' : 'danger',
+            "didn't attempt" : 'secondary',
+            'on hold' : 'warning'
+        };
+
+        return map[status];
+    }
+
+
 %>
 
 <%- contentFor('body') %>
@@ -11,7 +26,7 @@
             <div>Company : <%= interview.company %></div>
             <div>Interview : <%= interview.date %></div>
         </div>
-        <a href="/interviews/id/add-student" class="btn btn-success">Allocate Student</a>
+        <a href="/interviews/<%= interview.id %>/add-student" class="btn btn-success">Allocate Student</a>
     </h1>
 
     <table class="table table-striped">
@@ -24,7 +39,32 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            <% for (let i=0; i<students.length; i++) { %>
+                <tr>
+                    <% const student = students[i]; %>
+                    <th scope="row"><%= i + 1 %></th>
+                    <td><%= student.name %></td>
+                    <td><%= student.email %></td>
+                    <td>
+                        <span class="badge text-bg-<%= getInterviewStatusClass(student.status) %>">
+                            <%= student.status.toUpperCase() %>
+                        </span>
+                    </td>
+                    <td>
+                        <a 
+                            href="/interviews/<%= interview.id %>/edit-status/<%= student.id %>">
+                            Edit Status
+                        </a> | 
+                        <a 
+                            onclick="return confirm('Do you want to delete?')" 
+                            href="/interviews/<%= interview.id %>/delete-student/<%= student.id %>">
+                            Remove
+                        </a>
+                    </th>
+                </tr>
+            <% } %>
+        </tbody>
     </table>
 
 </div>

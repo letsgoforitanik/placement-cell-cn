@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { IInterviewResult } from "@/types/model";
+import { IStudentInterviewStatus } from "@/types/model";
 
-const interviewResultSchema = new Schema<IInterviewResult>(
+const schema = new Schema<IStudentInterviewStatus>(
     {
         interview: {
             type: Schema.Types.ObjectId,
@@ -16,7 +16,7 @@ const interviewResultSchema = new Schema<IInterviewResult>(
         result: {
             type: Schema.Types.String,
             required: true,
-            enum: ["passed", "failed", "on hold", "didn't attempt"]
+            enum: ["appearing", "passed", "failed", "on hold", "didn't attempt"]
         }
     },
     {
@@ -24,6 +24,6 @@ const interviewResultSchema = new Schema<IInterviewResult>(
     }
 );
 
-const InterviewResult = model<IInterviewResult>('InterviewResult', interviewResultSchema);
+const StudentInterviewStatus = model<IStudentInterviewStatus>('StudentInterviewStatus', schema);
 
-export default InterviewResult;
+export default StudentInterviewStatus;

@@ -15,11 +15,11 @@ studentRouter.get('/', getStudentsPage);
 studentRouter.get('/add', getAddStudentPage);
 studentRouter.post('/add', validate, addStudent);
 studentRouter.get('/:id/edit', getEditStudentPage);
-studentRouter.post('/:id/edit', validate, updateStudent);
+studentRouter.post('/update', validate, updateStudent);
 studentRouter.get('/:id/delete', deleteStudent);
 studentRouter.get('/course-scores', getCourseScorePage);
 studentRouter.get('/course-scores/:id/edit', getEditCourseScorePage);
-studentRouter.post('/course-scores/:id/edit', validate, updateCourseScore);
+studentRouter.post('/course-scores/update', validate, updateCourseScore);
 
 
 // route handlers
@@ -102,12 +102,7 @@ async function getEditCourseScorePage(req: Request, res: Response) {
 async function updateCourseScore(req: Request, res: Response) {
     const id = req.params.id;
     const scores = req.validationResult as CourseScoreEditInfo;
-
-    console.log({ scores });
-
     await studentService.updateCourseScore({ ...scores, id });
-
-    req.setFlashMessage('Course scores updated successfully');
     return res.redirect('/students/course-scores');
 }
 

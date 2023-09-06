@@ -1,6 +1,6 @@
 <% 
     const getErrorClass = (fieldName) => errors?.[fieldName] ? 'is-invalid' : ''; 
-    const url = type === 'edit' ? `/students/${student.id}/edit` : `/students/add`;
+    const url = type === 'edit' ? `/students/update` : `/students/add`;
     const getSelectedStatus = (status) => status === student?.status ? 'selected' : '';
 %>
 

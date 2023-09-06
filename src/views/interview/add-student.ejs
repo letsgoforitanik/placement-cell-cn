@@ -1,0 +1,43 @@
+<%
+    viewBag.pageTitle = "Interviews | Allocate Student";
+%>
+
+
+<%- contentFor('body') %>
+<div class="add-edit-container">
+    
+    <h1 class="display-6">
+        <strong><span>Allocate Student</span></strong>
+    </h1>
+
+    <form action="/interviews/<%= interview.id %>/add-student" method="post">
+
+        <input type="hidden" name="interviewId" value="<%= interview.id %>" />
+
+        <div class="mb-3">
+            <label for="company" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="company" value="<%= interview.company %>" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Interview Date</label>
+            <input type="text" class="form-control" id="date" value="<%= interview.date %>" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="studentId" class="form-label">Choose Student</label>
+    
+            <select class="form-select" name="studentId" id="studentId">
+                <% for (const student of students) { %>
+                    <option value="<%= student.id %>">
+                        <%= student.name %> (<%= student.email %>)
+                    </option> 
+                <% } %>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    </form>
+    
+</div>

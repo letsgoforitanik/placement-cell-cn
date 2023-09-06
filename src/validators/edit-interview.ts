@@ -1,5 +1,6 @@
 import { z } from "zod";
 import moment from "moment";
+import { Types } from "mongoose";
 
 function preprocess(body: any) {
     const { id, company, date } = body;

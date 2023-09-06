@@ -1,0 +1,63 @@
+<%
+    viewBag.pageTitle = "Interviews | Change Status";
+    const results = ["appearing", "passed", "failed", "on hold", "didn't attempt"];
+
+    function toTitlecase(words) {
+        const list = words.split(' ').filter(Boolean);
+        return list.map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' '); 
+    }
+
+    function getSelected(result) {
+        return status.result === result ? 'selected' : '';
+    }
+
+%>
+
+
+<%- contentFor('body') %>
+<div class="add-edit-container">
+    
+    <h1 class="display-6">
+        <strong><span>Change Student Status</span></strong>
+    </h1>
+
+    <form action="/interviews/update-status" method="post">
+
+        <input type="hidden" name="interviewId" value="<%= status.interview.id %>" />
+        <input type="hidden" name="studentId" value="<%= status.student.id %>">
+
+        <div class="mb-3">
+            <label for="company" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="company" value="<%= status.interview.company %>" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Interview Date</label>
+            <input type="text" class="form-control" id="date" value="<%= status.interview.date %>" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Student Name</label>
+            <input type="text" class="form-control" id="date" value="<%= status.student.name %>" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="studentId" class="form-label">Interview Status</label>
+    
+            <select class="form-select" name="status" id="status">
+                <% for (const result of results) { %>
+                    <option value="<%= result %>" <%= getSelected(result) %>>
+                        <%= toTitlecase(result) %>
+                    </option> 
+                <% } %>
+            </select>
+
+            <% if (errors?.status) { %> <div class="form-text invalid-feedback"><%= errors.status %></div> <% } %>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    </form>
+    
+</div>

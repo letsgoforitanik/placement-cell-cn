@@ -27,10 +27,10 @@ interface IInterview {
     date: Date;
 }
 
-interface IInterviewResult {
+interface IStudentInterviewStatus {
     interview: Types.ObjectId | HydratedDocument<IInterview>;
     student: Types.ObjectId | HydratedDocument<IStudent>;
-    result: 'passed' | 'failed' | 'on hold' | "didn't attempt";
+    result: 'passed' | 'failed' | 'on hold' | "didn't attempt" | 'appearing';
 }
 
 
