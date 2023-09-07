@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import validators from "@/validators";
-import { getRouteTemplate } from "@/helpers";
+
 
 export default function validate(req: Request, res: Response, next: NextFunction) {
 
-    const template = getRouteTemplate(req);
-
-    const validator = validators[template];
+    const validator = validators[req.originalUrl];
     const result = validator.safeParse(req.body);
 
     if (result.success === false) {

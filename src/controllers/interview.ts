@@ -97,11 +97,13 @@ async function getInterviewStudentListPage(req: Request, res: Response) {
 
 
     return res.render('interview/student-list', {
+
         interview: {
             id: interview!.id,
             company: interview!.company,
             date: moment(interview!.date).format('dddd, DD/MM/YYYY')
         },
+
         students: statusDetails.map((details: any) => ({
             id: details.student.id,
             name: details.student.name,

@@ -17,7 +17,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
                     
                     <% if (!user) { %>
                         <li class="nav-item">
@@ -38,6 +38,12 @@
 
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/interviews">Interviews</a>
+                        </li>
+
+                        <li class="nav-item flex-grow-1"></li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><%= user.name %></a>
                         </li>
 
                         <li class="nav-item">

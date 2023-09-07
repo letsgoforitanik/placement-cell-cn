@@ -104,9 +104,8 @@ async function getEditCourseScorePage(req: Request, res: Response) {
 
 
 async function updateCourseScore(req: Request, res: Response) {
-    const id = req.params.id;
     const scores = req.validationResult as CourseScoreEditInfo;
-    await studentService.updateCourseScore({ ...scores, id });
+    await studentService.updateCourseScore(scores);
     return res.redirect('/students/course-scores');
 }
 

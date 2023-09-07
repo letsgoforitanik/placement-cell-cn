@@ -27,6 +27,7 @@ export async function updateInterview(info: InterviewUpdateDto) {
 
 export async function deleteInterview(id: string) {
     await Interview.findByIdAndDelete(id);
+    await StudentInterviewStatus.deleteMany({ interview: new Types.ObjectId(id) });
     return success(null);
 }
 
@@ -40,14 +41,11 @@ export async function getInterviewInDetails(interviewId: string) {
 
 
 export async function findUnallocatedStudents(id: string) {
-
     const interview = await Interview.findById(id);
     const interviewDetails = await StudentInterviewStatus.find({ interview });
     const studentIds = interviewDetails.map(details => details.student);
     const unallocatedStudents = await Student.find({ _id: { $nin: studentIds } });
-
     return success({ interview, students: unallocatedStudents });
-
 }
 
 
