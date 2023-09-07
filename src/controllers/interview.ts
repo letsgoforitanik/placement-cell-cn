@@ -105,7 +105,7 @@ async function getInterviewStudentListPage(req: Request, res: Response) {
         students: statusDetails.map((details: any) => ({
             id: details.student.id,
             name: details.student.name,
-            email: details.student.phone,
+            email: details.student.email,
             status: details.result
         }))
     });

@@ -5,7 +5,6 @@ const minify = require("gulp-clean-css");
 const uglify = require("gulp-uglify");
 
 
-
 gulp.task('clean:dist', () => del(['dist/**/*']));
 gulp.task('ts:browser->js', () => gulpRun(`tsc --project src/assets/ts/tsconfig.json`).exec());
 gulp.task('ts:server->js', () => gulpRun(`tsc && tsc-alias`).exec());

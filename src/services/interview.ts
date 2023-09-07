@@ -1,7 +1,7 @@
-import { success } from "@/helpers";
+import { Types } from "mongoose";
 import { Interview, Student, StudentInterviewStatus } from "@/models";
 import { InterviewCreateDto, InterviewUpdateDto } from "@/types/dto";
-import { Types } from "mongoose";
+import { success } from "@/helpers";
 
 export async function getInterviews() {
     const interviews = await Interview.find().sort('-updatedAt');
@@ -40,9 +40,14 @@ export async function getInterviewInDetails(interviewId: string) {
 
 
 export async function findUnallocatedStudents(id: string) {
+
     const interview = await Interview.findById(id);
-    const students = await Student.find();
-    return success({ interview, students });
+    const interviewDetails = await StudentInterviewStatus.find({ interview });
+    const studentIds = interviewDetails.map(details => details.student);
+    const unallocatedStudents = await Student.find({ _id: { $nin: studentIds } });
+
+    return success({ interview, students: unallocatedStudents });
+
 }
 
 

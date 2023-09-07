@@ -4,12 +4,14 @@ import { CourseScoreEditInfo, StudentAddInfo } from "@/types/validation-result";
 import { studentService } from "@/services";
 import { StudentUpdateDto } from "@/types/dto";
 
+
+
 const router = express.Router();
 const studentRouter = express.Router();
 
-router.use("/students", authorizedOnly, studentRouter);
-
 // routes 
+
+router.use("/students", authorizedOnly, studentRouter);
 
 studentRouter.get('/', getStudentsPage);
 studentRouter.get('/add', getAddStudentPage);
@@ -26,8 +28,10 @@ studentRouter.post('/course-scores/update', validate, updateCourseScore);
 
 async function getStudentsPage(req: Request, res: Response) {
     const result = await studentService.getStudents();
-    const students = result.data;
-    return res.render('student/index', { students });
+
+    return res.render('student/index', {
+        students: result.data
+    });
 }
 
 
@@ -37,9 +41,9 @@ async function getAddStudentPage(req: Request, res: Response) {
 
 
 async function addStudent(req: Request, res: Response) {
-
     const info = req.validationResult as StudentAddInfo;
-    const result = await studentService.addStudent({ ...info, courseScores: { dsa: null, react: null, webd: null } });
+    const courseScores = { dsa: null, react: null, webd: null };
+    const result = await studentService.addStudent({ ...info, courseScores });
 
     if (!result.success) {
         req.setFlashErrors(result.errors);
@@ -53,7 +57,6 @@ async function addStudent(req: Request, res: Response) {
 
 
 async function getEditStudentPage(req: Request, res: Response) {
-
     const studentId = req.params.id;
     const result = await studentService.getStudent(studentId);
 
@@ -64,7 +67,6 @@ async function getEditStudentPage(req: Request, res: Response) {
 
 
 async function updateStudent(req: Request, res: Response) {
-
     const info = req.validationResult as StudentUpdateDto;
     await studentService.updateStudent(info);
 
@@ -75,7 +77,6 @@ async function updateStudent(req: Request, res: Response) {
 
 
 async function deleteStudent(req: Request, res: Response) {
-
     const studentId = req.params.id;
     await studentService.deleteStudent(studentId);
 
@@ -95,7 +96,10 @@ async function getCourseScorePage(req: Request, res: Response) {
 async function getEditCourseScorePage(req: Request, res: Response) {
     const studentId = req.params.id;
     const result = await studentService.getStudentCourseScore(studentId);
-    return res.render('student/edit-course-score', { student: result.data });
+
+    return res.render('student/edit-course-score', {
+        student: result.data
+    });
 }
 
 

@@ -8,7 +8,7 @@ const router = express.Router();
 
 // routes
 
-router.get('/', (req, res) => res.redirect('/students'));
+router.get('/', (_, res) => res.redirect('/students'));
 router.get('/sign-in', anonymousOnly, getSignInPage);
 router.post('/sign-in', anonymousOnly, signInUser);
 router.get('/sign-up', anonymousOnly, getSignUpPage);
