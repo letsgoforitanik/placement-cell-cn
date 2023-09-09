@@ -72,9 +72,16 @@ export async function getStudentStatus(interviewId: string, studentId: string) {
     return success(status);
 }
 
+
 export async function updateStudentStatus(interviewId: string, studentId: string, status: string) {
     const interview = new Types.ObjectId(interviewId);
     const student = new Types.ObjectId(studentId);
     const newStatus = await StudentInterviewStatus.updateOne({ interview, student }, { result: status });
     return success(newStatus);
+}
+
+
+export async function getPlacementInfo() {
+    const info = await StudentInterviewStatus.find().populate(['interview', 'student']);
+    return success(info);
 }

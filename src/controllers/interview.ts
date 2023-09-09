@@ -1,6 +1,7 @@
 import { HydratedDocument } from "mongoose";
 import express, { Request, Response } from "express";
 import moment from "moment";
+import { stringify } from "csv-stringify";
 
 import { authorizedOnly, validate } from "@/middlewares";
 import { interviewService } from "@/services";
@@ -26,6 +27,7 @@ interviewRouter.post('/:id/add-student', addStudentToInterview);
 interviewRouter.get('/:interviewId/delete-student/:studentId', deleteStudentFromInterview);
 interviewRouter.get('/:interviewId/edit-status/:studentId', getEditInterviewStatusPage);
 interviewRouter.post('/update-status', validate, updateInterviewStatus);
+interviewRouter.get('/placement-report-csv', getPlacementReport);
 
 
 // route handlers
@@ -182,6 +184,57 @@ async function updateInterviewStatus(req: Request, res: Response) {
 
     req.setFlashMessage('Student interview status updated successfully');
     return res.redirect(`/interviews/${info.interviewId}/students`);
+}
+
+
+
+async function getPlacementReport(req: Request, res: Response) {
+
+    const result = await interviewService.getPlacementInfo();
+
+    const info = result.data;
+
+    const columns = [
+        'Student Id',
+        'Student Name',
+        'Student College',
+        'Student Status',
+        'DSA Final Score',
+        'WebD Final Score',
+        'React Final Score',
+        'Interview Date',
+        'Interview Company',
+        'Interview Student Result'
+    ];
+
+
+    const stringifier = stringify({ header: true, columns });
+
+    for (const row of info) {
+
+        const student = row.student as HydratedDocument<IStudent>;
+        const interview = row.interview as HydratedDocument<IInterview>;
+
+        stringifier.write([
+            student.id,
+            student.name,
+            student.college,
+            student.status,
+            student.courseScores.dsa,
+            student.courseScores.webd,
+            student.courseScores.react,
+            moment(interview.date).format('DD/MM/YYYY'),
+            interview.company,
+            row.result
+        ]);
+
+    }
+
+    stringifier.end();
+
+    res.attachment('placement_report.csv');
+    stringifier.pipe(res);
+
 }
 
 
