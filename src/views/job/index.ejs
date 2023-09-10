@@ -1,0 +1,30 @@
+<% viewBag.pageTitle = 'Jobs'; %>
+
+<%- contentFor('body') %>
+<div class="list-container">
+
+    <h1 class="display-6">
+        <strong>Jobs</strong>
+    </h1>
+
+    <ul class="jobs">
+        <% for (const hit of data.hits) { %>
+            <li class="card">
+                <div class="title"><b><%= hit.title %></b></div>
+                <div class="company"><%= hit.company_name %></div>
+                <div><%= hit.location %></div>
+                <small>Posted <%= hit.formatted_relative_time %></small>
+                <div class="apply-btn">
+                    <a 
+                        href="https://in.indeed.com/viewjob?jk=<%= hit.id %>" 
+                        class="btn btn-primary btn-sm"
+                        target="_blank">
+                        Apply
+                    </a>
+                </div>
+            </li>
+        <% } %>
+    </ul>
+
+
+</div>

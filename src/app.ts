@@ -7,8 +7,8 @@ import flash from "connect-flash";
 
 import controllersRouter from "@/controllers";
 import { environment, initializeDb, sessionConfig, passport } from "@/config";
-import { getPath, extendExpress } from "@/helpers";
-import { locals } from "@/middlewares";
+import { getPath, extendExpress, trycatchify, error } from "@/helpers";
+import { locals, errorHandler } from "@/middlewares";
 
 
 function configureAppSettings(app: Express) {
@@ -30,6 +30,7 @@ function configureApp(app: Express) {
     app.use(passport.session());
     app.use(locals);
     app.use(controllersRouter);
+    app.use(errorHandler);
 }
 
 
@@ -42,8 +43,9 @@ async function main() {
     const app = express();
 
     configureApp(app);
-
     configureAppSettings(app);
+
+    trycatchify(app);
 
     await initializeDb();
     console.log(`Database connection is made successfully`);
