@@ -7,7 +7,7 @@ import flash from "connect-flash";
 
 import controllersRouter from "@/controllers";
 import { environment, initializeDb, sessionConfig, passport } from "@/config";
-import { getPath, extendExpress, trycatchify, error } from "@/helpers";
+import { getPath, extendExpress, trycatchify } from "@/helpers";
 import { locals, errorHandler } from "@/middlewares";
 
 

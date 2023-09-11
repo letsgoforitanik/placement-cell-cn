@@ -1,5 +1,7 @@
 import { Types, HydratedDocument } from "mongoose";
 
+// model types
+
 interface CourseScores {
     dsa: number | null;
     react: number | null;

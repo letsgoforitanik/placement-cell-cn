@@ -2,6 +2,7 @@ import session, { SessionOptions } from "express-session";
 import createMongoDBStore from "connect-mongodb-session";
 import environment from "./environment";
 
+// session config to store session in MongoDB
 
 const MongoDBStore = createMongoDBStore(session);
 

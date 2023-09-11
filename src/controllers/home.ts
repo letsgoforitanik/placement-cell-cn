@@ -8,7 +8,12 @@ const router = express.Router();
 
 // routes
 
-router.get('/', (_, res) => res.redirect('/students'));
+// anonymousOnly -> middleware makes sure that requests
+// only pass if they are not authenticated
+// authorizedOnly -> middleware makes sure that requests
+// only pass if they are authenticated
+
+router.get('/', (req, res) => res.redirect('/students'));
 router.get('/sign-in', anonymousOnly, getSignInPage);
 router.post('/sign-in', anonymousOnly, signInUser);
 router.get('/sign-up', anonymousOnly, getSignUpPage);
@@ -28,6 +33,7 @@ function getSignUpPage(req: Request, res: Response) {
     return res.render('home/sign-up');
 }
 
+
 async function signUpUser(req: Request, res: Response) {
 
     const info = req.validationResult as SignUpInfo;
@@ -43,6 +49,7 @@ async function signUpUser(req: Request, res: Response) {
     return res.redirect('/sign-in');
 
 }
+
 
 async function signInUser(req: Request, res: Response, next: NextFunction) {
 
@@ -79,4 +86,4 @@ function signOutUser(req: Request, res: Response) {
 
 
 
-export { router }
+export { router }; 

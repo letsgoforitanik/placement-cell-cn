@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/jobs', authorizedOnly, getJobs);
 
+// This route handler fetches all the recent node js 
+// developer jobs in india using indeed api
 async function getJobs(req: Request, res: Response) {
 
     const params = new URLSearchParams({

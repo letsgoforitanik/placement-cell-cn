@@ -1,3 +1,4 @@
+// Wraps the data inside an object
 export function success<T>(data: T): SuccessResult<T> {
     return {
         success: true,

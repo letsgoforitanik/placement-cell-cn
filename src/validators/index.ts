@@ -9,6 +9,9 @@ import addInterviewValidator from "./add-interview";
 import editInterviewValidator from "./edit-interview";
 import updateInterviewStatusValidator from "./update-interview-status";
 
+// This is the collection of validators
+// Purpose of them is to validate one specific url or request
+
 const validators: Record<string, ZodType> = {
     '/sign-up': signupValidator,
     '/sign-in': signinValidator,

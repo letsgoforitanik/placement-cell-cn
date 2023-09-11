@@ -2,6 +2,9 @@ import express from "express";
 
 export default function extendExpress() {
 
+    // This helper method serializes errors and set them in flash
+    // it also serializes the current request body in flash
+    // serialized values are deserialized by the 'locals' middleware
     express.request.setFlashErrors = function (arg: any) {
 
         if (typeof arg === 'string') {
@@ -22,7 +25,8 @@ export default function extendExpress() {
 
     };
 
-
+    // This method sets the message in flash
+    // the message value is retrieved by the 'locals' middleware
     express.request.setFlashMessage = function (message: string) {
         this.flash('message', message);
     }

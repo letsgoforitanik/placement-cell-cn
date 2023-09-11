@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// all environment variables
+
 const environment = {
     nodeEnv: process.env.NODE_ENV!,
     port: process.env.PORT!,

@@ -1,6 +1,16 @@
 import { Express, NextFunction, Request, Response, Router } from 'express';
 
+// This method is a wrapper around trycatchifyrouter
+export default function trycatchify(app: Express) {
+    trycatchifyRouter(app._router);
+}
 
+// Purpose of this method is to recursively traverse 
+// each router starting from app router. When it finds
+// a request handler, it wraps the handler with a try
+// catch block. the catch block sends the caught error to 
+// error handling middleware. Because of this method, errors
+// need not be caught inside request handlers. 
 function trycatchifyRouter(router: Router) {
 
     const routerStack = router.stack;
@@ -24,9 +34,4 @@ function trycatchifyRouter(router: Router) {
         }
 
     }
-}
-
-
-export default function trycatchify(app: Express) {
-    trycatchifyRouter(app._router);
 }
